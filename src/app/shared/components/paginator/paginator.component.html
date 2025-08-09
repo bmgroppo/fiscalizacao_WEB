@@ -1,0 +1,40 @@
+@if(correteImplamentation){
+<div class="paginator-container">
+
+
+  <button class="paginator-button" (click)="changePage(pagination.currentPage - 1)"
+    [disabled]="pagination.currentPage === 1">
+    Anterior
+  </button>
+
+  <span class="page-info">
+    Página {{ pagination.currentPage }} de {{ pagination.totalPages }}
+  </span>
+
+  <button class="paginator-button" (click)="changePage(pagination.currentPage + 1)"
+    [disabled]="pagination.currentPage === pagination.totalPages">
+    Próxima
+  </button>
+
+  <div class="page-input-container">
+    <input type="number" #specificPage class="page-input" placeholder="Página" min="1" [max]="pagination.totalPages">
+
+    <button class="go-button" (click)="changePage(specificPage.valueAsNumber)"
+      [disabled]="specificPage.valueAsNumber < 1 || specificPage.valueAsNumber > pagination.totalPages">
+      Ir
+    </button>
+
+
+    <!-- total encontrado -->
+    <span class="page-info">
+      Total encontrado: {{ pagination.totalItems }}
+    </span>
+  </div>
+</div>
+}@else {
+<div class="paginator-container">
+  <span class="error-message">
+    O componente pai deve implementar o evento 'pageChange'.
+  </span>
+</div>
+}

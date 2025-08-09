@@ -1,0 +1,28 @@
+<div class="alerts-container">
+  @for (alert of alerts; track trackByFn($index, alert)) {
+    <div class="alert" [class]="'alert-' + alert.type" [@slideInOut]>
+      <div class="alert-content">
+        <div class="alert-icon">
+          <span class="material-symbols-outlined">{{ getAlertIcon(alert.type) }}</span>
+        </div>
+        
+        <div class="alert-message">
+          @if (alert.title) {
+            <div class="alert-title">{{ alert.title }}</div>
+          }
+          <div class="alert-text">{{ alert.message }}</div>
+        </div>
+        
+        <button class="alert-close" (click)="closeAlert(alert.id)" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      @if (!alert.persistent && alert.duration! > 0) {
+        <div class="alert-progress">
+          <div class="alert-progress-bar" [style.animation-duration]="alert.duration + 'ms'"></div>
+        </div>
+      }
+    </div>
+  }
+</div>

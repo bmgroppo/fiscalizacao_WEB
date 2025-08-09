@@ -1,0 +1,37 @@
+<div class="mat-elevation-z2">
+  @if (dataSource && dataSource.length > 0) {
+  <div class="mat-table-container">
+    <table class="mat-table">
+      <thead>
+        @for (column of headerColumns; track column) {
+        <th class="mat-header-cell">{{column | titlecase}}</th>
+        }
+        @if (actionTemplate) {
+        <th class="mat-header-cell mat-header-cell-actions">Ações</th>
+        }
+      </thead>
+      <tbody>
+        @for (element of dataSource; track element[idTrack]; let i = $index) {
+        <tr class="mat-row" [class.mat-row-odd]="i % 2 === 1">
+          @for (column of columnsOrder; track column) {
+          <td>{{element[column] ? element[column] : '-'}}</td>
+          }
+          @if (actionTemplate) {
+          <td class="mat-cell mat-cell-actions">
+            <ng-container *ngTemplateOutlet="actionTemplate; context: { $implicit: element, index: i }"></ng-container>
+          </td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <app-empty-state></app-empty-state>
+  }
+</div>
+
+<!-- Fallback para ng-content quando não há template específico -->
+@if (!actionTemplate) {
+<ng-content></ng-content>
+}

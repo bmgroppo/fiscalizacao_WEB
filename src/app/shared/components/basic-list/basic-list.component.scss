@@ -1,0 +1,443 @@
+// Estilos inspirados no Angular Material
+// Integrado com o design system global
+
+// Importando mixins do Angular Material se disponível
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  width: 100%;
+  
+  // Container principal com elevação Material
+  .mat-elevation-z2 {
+    background: var(--surface-color);
+    border-radius: 4px; // Material Design border radius
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+                0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+                0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    margin: 16px 0;
+  }
+  
+  // Container com overflow horizontal
+  .mat-table-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    position: relative;
+    
+    // Indicador de scroll horizontal
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    // Mostra o indicador quando há overflow
+    &.has-scroll::after {
+      opacity: 1;
+    }
+    
+    // Scrollbar customizada
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      
+      &:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    }
+    
+    // Para Firefox
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Tabela principal - estilo Material
+.mat-table {
+  width: 100%;
+  min-width: 600px; // Largura mínima para garantir que todas as colunas sejam visíveis
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--surface-color);
+  
+  // Cabeçalho - estilo Material
+  thead {
+    .mat-header-cell {
+      color: rgba(0, 0, 0, 0.700);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 20px;
+      padding: 12px 24px;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      background: var(--surface-color);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      
+      &:first-child {
+        padding-left: 24px;
+      }
+      
+      &:last-child {
+        padding-right: 24px;
+      }
+      
+      &.mat-header-cell-actions {
+        text-align: center;
+        width: 120px;
+      }
+    }
+  }
+  
+  // Corpo da tabela - estilo Material
+  tbody {
+    .mat-row {
+      min-height: 48px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      // Linhas alternadas (zebra striping) - opcional
+      &.mat-row-odd {
+        background-color: rgba(0, 0, 0, 0.02);
+        
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.06);
+        }
+      }
+      
+      .mat-cell {
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 16px 24px;
+        vertical-align: middle;
+        border: none;
+        
+        &:first-child {
+          padding-left: 24px;
+        }
+        
+        &:last-child {
+          padding-right: 24px;
+        }
+        
+        &.mat-cell-empty {
+          color: rgba(0, 0, 0, 0.38);
+          font-style: italic;
+        }
+        
+        &.mat-cell-actions {
+          text-align: center;
+          padding: 8px 16px;
+        }
+      }
+    }
+  }
+}
+
+
+// Botões de ação - estilo Material
+.mat-cell-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  // Botões básicos
+  button {
+    min-width: 64px;
+    height: 36px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.25px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    
+    // Material ripple effect simulation
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
+      transform: translate(-50%, -50%);
+    }
+    
+    &:active::before {
+      width: 300px;
+      height: 300px;
+      top: 50%;
+      left: 50%;
+    }
+    
+    // Botão primário (usando cor do tema)
+    &.mat-raised-button {
+      background: var(--background-color);
+      color: var(--primary-color);
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+                  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+                  0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+      
+      &:hover {
+        box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+                    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+                    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      }
+      
+      &:active {
+        box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+                    0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+                    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+      }
+    }
+    
+    // Botão secundário
+    &.mat-stroked-button {
+      background: transparent;
+      color: var(--background-color);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      
+      &:hover {
+        background: rgba(34, 112, 180, 0.04);
+      }
+    }
+    
+    // Botão de texto
+    &.mat-button {
+      background: transparent;
+      color: var(--background-color);
+      box-shadow: none;
+      
+      &:hover {
+        background: rgba(34, 112, 180, 0.04);
+      }
+    }
+    
+    // Botão de perigo
+    &.mat-warn {
+      background: #f44336;
+      color: white;
+      
+      &:hover {
+        background: #d32f2f;
+      }
+      
+      &.mat-stroked-button {
+        background: transparent;
+        color: #f44336;
+        border-color: #f44336;
+        
+        &:hover {
+          background: rgba(244, 67, 54, 0.04);
+        }
+      }
+    }
+    
+    // Estado desabilitado
+    &:disabled {
+      background: rgba(0, 0, 0, 0.12) !important;
+      color: rgba(0, 0, 0, 0.26) !important;
+      box-shadow: none !important;
+      cursor: default;
+      
+      &.mat-stroked-button,
+      &.mat-button {
+        background: transparent !important;
+        border-color: rgba(0, 0, 0, 0.26) !important;
+      }
+    }
+  }
+  
+  // Ícones nos botões
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    
+    &:last-child {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+  }
+}
+
+// Responsividade Material
+@media (max-width: 768px) {
+  .mat-table {
+    min-width: 800px; // Aumenta a largura mínima em tablets para forçar scroll horizontal
+    
+    .mat-header-cell,
+    .mat-cell {
+      padding: 12px 16px;
+      font-size: 13px;
+      white-space: nowrap; // Evita quebra de linha
+      
+      &:first-child {
+        padding-left: 16px;
+      }
+      
+      &:last-child {
+        padding-right: 16px;
+      }
+    }
+    
+    .mat-row {
+      min-height: 44px;
+    }
+  }
+  
+  .mat-cell-actions {
+    flex-direction: row; // Mantém botões lado a lado
+    gap: 4px;
+    min-width: 120px; // Largura mínima para os botões
+    
+    button {
+      min-width: 56px;
+      height: 32px;
+      font-size: 12px;
+      padding: 0 12px;
+    }
+  }
+  
+  // Melhora a visibilidade do scroll horizontal
+  .mat-table-container {
+    &::-webkit-scrollbar {
+      height: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  :host .mat-elevation-z2 {
+    margin: 8px 0; // Remove margens laterais em mobile
+    border-radius: 0;
+  }
+  
+  .mat-table {
+    min-width: 900px; // Ainda maior em mobile para forçar scroll
+    
+    .mat-header-cell,
+    .mat-cell {
+      padding: 8px 12px;
+      font-size: 12px;
+      
+      &:first-child {
+        padding-left: 12px;
+      }
+      
+      &:last-child {
+        padding-right: 12px;
+      }
+    }
+  }
+  
+  .mat-empty-state {
+    padding: 40px 16px;
+    
+    .mat-empty-icon {
+      font-size: 36px;
+    }
+    
+    .mat-empty-message {
+      font-size: 18px;
+    }
+  }
+  
+  // Scrollbar mais visível em mobile
+  .mat-table-container {
+    &::-webkit-scrollbar {
+      height: 16px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// Animações Material
+@keyframes mat-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mat-row {
+  animation: mat-fade-in 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: calc(var(--row-index, 0) * 0.03s);
+}
+
+// Loading state Material
+.mat-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  
+  .mat-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(34, 112, 180, 0.2);
+    border-left: 4px solid var(--background-color);
+    border-radius: 50%;
+    animation: mat-spinner-rotate 1s linear infinite;
+  }
+}
+
+@keyframes mat-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

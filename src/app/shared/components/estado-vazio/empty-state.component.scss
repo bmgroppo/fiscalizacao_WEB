@@ -1,0 +1,26 @@
+
+// Estado vazio - estilo Material
+.mat-empty-state {
+  text-align: center;
+  padding: 64px 24px;
+  color: rgba(0, 0, 0, 0.54);
+  
+  .mat-empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.38;
+  }
+  
+  .mat-empty-message {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.54);
+  }
+  
+  .mat-empty-description {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.38);
+    line-height: 20px;
+  }
+}
